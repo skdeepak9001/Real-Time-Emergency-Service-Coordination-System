@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emergency Response System</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f3f6fa;
+  color: #172033;
+}
+
+header {
+  background: #101c35;
+  color: white;
+  padding: 22px;
+  text-align: center;
+}
+
+header h2 {
+  font-size: 21px;
+}
+
+header p {
+  margin-top: 7px;
+  color: #cbd5e1;
+  font-size: 13px;
+}
+
+.container {
+  max-width: 480px;
+  margin: auto;
+  padding: 22px;
+}
+
+.status {
+  background: white;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 22px;
+  box-shadow: 0 3px 12px #0000000d;
+}
+
+.status p {
+  margin-top: 8px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.sos-area {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.sos-button {
+  width: 165px;
+  height: 165px;
+  border-radius: 50%;
+  background: #e32636;
+  border: 8px solid #ffd9dd;
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 5px 20px #e3263640;
+}
+
+.sos-area p {
+  margin-top: 18px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.card {
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  margin-top: 18px;
+  box-shadow: 0 3px 12px #0000000d;
+}
+
+.card h3 {
+  margin-bottom: 12px;
+}
+
+button.action {
+  width: 100%;
+  background: #172d50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  margin-top: 12px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#location, #message {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #64748b;
+  font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h2>Emergency Response System</h2>
+  <p>Real-Time Emergency Service Coordination</p>
+</header>
+
+<div class="container">
+
+  <div class="status">
+    <h3>Welcome, User</h3>
+    <p>Emergency assistance and location coordination</p>
+    <p id="serviceStatus">System Status: Ready</p>
+  </div>
+
+  <div class="sos-area">
+    <button class="sos-button" onclick="sendSOS()">
+      SOS
+    </button>
+    <p>Tap to create a demo emergency request</p>
+  </div>
+
+  <div class="card">
+    <h3>📍 Your Location</h3>
+    <p>Share your GPS location for emergency coordination.</p>
+    <button class="action" onclick="getLocation()">
+      Get My Location
+    </button>
+    <div id="location">Location not captured yet.</div>
+  </div>
+
+  <div class="card">
+    <h3>🚑 Emergency Request</h3>
+    <div id="message">
+      No emergency request created.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Academic Project Prototype | Deepak S.
+  <br><br>
+  Demo only – not connected to real emergency services.
+</footer>
+
+<script>
+let latitude = null;
+let longitude = null;
+
+function getLocation() {
+  const output = document.getElementById("location");
+
+  if (!navigator.geolocation) {
+    output.innerText = "GPS is not supported.";
+    return;
+  }
+
+  output.innerText = "Getting your location...";
+
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+
+      output.innerHTML =
+        "Latitude: " + latitude.toFixed(5) +
+        "<br>Longitude: " + longitude.toFixed(5) +
+        '<br><a target="_blank" href="https://www.google.com/maps?q=' +
+        latitude + ',' + longitude + '">View on Google Maps</a>';
+    },
+    function() {
+      output.innerText =
+        "Unable to get location. Please allow GPS permission.";
+    }
+  );
+}
+
+function sendSOS() {
+  if (latitude === null || longitude === null) {
+    document.getElementById("message").innerText =
+      "Please capture your GPS location first.";
+    return;
+  }
+
+  document.getElementById("message").innerText =
+    "Demo emergency request created successfully! " +
+    "Location: " + latitude.toFixed(5) + ", " +
+    longitude.toFixed(5);
+
+  document.getElementById("serviceStatus").innerText =
+    "System Status: Demo Request Created";
+}
+</script>
+
+</body>
+</html>
