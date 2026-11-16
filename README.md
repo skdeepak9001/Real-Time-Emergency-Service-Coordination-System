@@ -30,7 +30,7 @@ The system aims to connect patients, ambulance services, hospitals, and family m
 - Maps: GPS and Maps API
 
 # Project Status
-Planning and development not yet started.
+A unique website developed
 
 # Future Enhancements
 - Smart ambulance allocation
